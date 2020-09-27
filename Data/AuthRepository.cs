@@ -48,7 +48,7 @@ namespace dotnet_rpg.Data
             }
             else
             {
-                CreatePasswordHash(password, out byte[] passwordHash, out byte[] passwordSalt);
+                Utility.CreatePasswordHash(password, out byte[] passwordHash, out byte[] passwordSalt);
                 user.PasswordHash = passwordHash;
                 user.PasswordSalt = passwordSalt;
 
@@ -68,15 +68,6 @@ namespace dotnet_rpg.Data
                 userExists = true;
             }
             return userExists;
-        }
-
-        private void CreatePasswordHash(string password, out byte[] passwordHash, out byte[] passwordSalt)
-        {
-            using (var hmac = new System.Security.Cryptography.HMACSHA512())
-            {
-                passwordSalt = hmac.Key;
-                passwordHash = hmac.ComputeHash(System.Text.Encoding.UTF8.GetBytes(password));
-            }
         }
 
         private bool VerifyPasswordHash(string password, byte[] passwordHash, byte[] passwordSalt)
