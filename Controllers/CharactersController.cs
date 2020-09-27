@@ -13,11 +13,11 @@ namespace dotnet_rpg.Controllers
     [Authorize]
     [ApiController]
     [Route("[controller]")]
-    public class CharactersController : ControllerBase
+    public class CharacterController : ControllerBase
     {
         private readonly ICharacterService _characterService;
 
-        public CharactersController(ICharacterService characterService)
+        public CharacterController(ICharacterService characterService)
         {
             _characterService = characterService;
         }
@@ -25,7 +25,6 @@ namespace dotnet_rpg.Controllers
         [HttpGet]
         public async Task<IActionResult> Get()
         {
-            int userId = int.Parse(User.Claims.FirstOrDefault(c => c.Type == ClaimTypes.NameIdentifier).Value);
             return Ok(await _characterService.GetAllCharacters());
         }
 
