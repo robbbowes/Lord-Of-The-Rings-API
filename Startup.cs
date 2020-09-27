@@ -20,6 +20,7 @@ using Microsoft.AspNetCore.Authentication.JwtBearer;
 using System.Text;
 using dotnet_rpg.Services.WeaponService;
 using dotnet_rpg.Services.SkillService;
+using dotnet_rpg.Services.CharacterSkillService;
 
 namespace dotnet_rpg
 {
@@ -42,6 +43,7 @@ namespace dotnet_rpg
             services.AddScoped<IAuthRepository, AuthRepository>();
             services.AddScoped<IWeaponService, WeaponService>();
             services.AddScoped<ISkillService, SkillService>();
+            services.AddScoped<ICharacterSkillService, CharacterSkillService>();
             services.AddAuthentication(JwtBearerDefaults.AuthenticationScheme).AddJwtBearer(
                 options =>
                 {

@@ -28,9 +28,12 @@ namespace dotnet_rpg.Services.WeaponService
             ServiceResponse<GetCharacterDto> serviceResponse = new ServiceResponse<GetCharacterDto>();
             try
             {
-                Character character = await _dataContext.Characters.FirstOrDefaultAsync(
-                    c => c.Id == newWeapon.CharacterId
-                    && c.User.Id == int.Parse(_httpContextAccessor.HttpContext.User.FindFirstValue(ClaimTypes.NameIdentifier))
+                Character character = await _dataContext.Characters
+                    .Include(c => c.CharacterSkills).ThenInclude(cs => cs.Skill)
+                    .FirstOrDefaultAsync(
+                        c => c.Id == newWeapon.CharacterId
+                        && c.User.Id == int.Parse(_httpContextAccessor.HttpContext.User.FindFirstValue(ClaimTypes.NameIdentifier)
+                    )
                 );
                 if (character == null)
                 {
